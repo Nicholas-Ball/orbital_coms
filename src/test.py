@@ -15,12 +15,21 @@
 # -----------------------------------------------------------------------
 # Special Functions Test
 # -----------------------------------------------------------------------
-# Transmited!
+# [*] Transmitting values...
+# [!] Transmited!
 # ABORT
-# Transmited!
+# [*] Transmitting values...
+# [!] Transmited!
 # CUT
+# -----------------------------------------------------------------------
+# On-Call Functions Test
+# -----------------------------------------------------------------------
+# I have been summoned!
 
 
+# This function is for testing command calls
+def summon():
+    print("I have been summoned!")
 
 
 import orbital_coms
@@ -34,6 +43,7 @@ test.set_temperature("62")
 test.set_command("test")
 test.set_location("30.3480N, 95.7827W")
 test.set_pressure("21")
+test.set_abort(summon)
 
 #-------------------------------------------------------------------------------
 # test getters
@@ -60,3 +70,12 @@ print(test.get_command())
 
 test.cut()
 print(test.get_command())
+
+#-------------------------------------------------------------------------------
+# test on-call functrions
+#-------------------------------------------------------------------------------
+print("-----------------------------------------------------------------------")
+print("On-Call Functions Test")
+print("-----------------------------------------------------------------------")
+
+test.force_abort()

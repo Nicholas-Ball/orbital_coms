@@ -3,6 +3,7 @@
 #   data to and from the orbital radio
 #
 
+import serial
 
 class coms(object):
     """coms class file for communicate to and from the launch station"""
@@ -18,13 +19,19 @@ class coms(object):
         self.Pressure = "1"
 
         # set the defualt internal temperature reading
-        self.temperature = "69"
+        self.Temperature = "69"
 
         # set the defualt command
         self.Command = "NONE"
 
-        #set debug value
+        # set debug value
         self.Debug = DEBUG
+
+        # set function to preform on an abort to nothing
+        self.on_abort = self.nothing
+
+        # set function to preform on a cut message to nothing
+        self.on_cut = self.nothing
 
 # ------------------------------------------------------------------------------
 # Getters
@@ -58,7 +65,7 @@ class coms(object):
              Parameters:
                 (String): Current temperature Value
         """
-        return self.temperature
+        return self.Temperature
 
     # returns current command as a String
     def get_command(self) -> str:
@@ -102,7 +109,7 @@ class coms(object):
              Parameters:
                 inp (String): New temperature Value
         """
-        self.temperature = inp
+        self.Temperature = inp
 
     # sets current command as a String
     def set_command(self,inp:str):
@@ -115,9 +122,44 @@ class coms(object):
         """
         self.Command = inp
 
+    # sets function to call upon reciving an abort command
+    def set_abort(self,inp):
+        """
+             Set a function to be run if the command is "ABORT"
+
+             Parameters:
+                inp (Function): New abort function to set
+        """
+        self.on_abort = inp
+
+    # sets function to call upon reciving a cut command
+    def set_cut(self,inp):
+        """
+             Set a function to be run if the command is "CUT"
+
+             Parameters:
+                inp (Function): New cut function to set
+        """
+        self.on_cut = inp
+
+    # sets function to call upon reciving a launch command
+    def set_launch(self,inp):
+        """
+             Set a function to be run if the command is "LAUNCH"
+
+             Parameters:
+                inp (Function): New launch function to set
+        """
+        self.on_launch = inp
 # ------------------------------------------------------------------------------
 # Special Functions
 #-------------------------------------------------------------------------------
+    def nothing(self):
+        """
+             This is for place holding unassigned function vars
+        """
+        print("Wow! Much empty!")
+
 
     # transmit data
     def transmit(self):
@@ -125,17 +167,21 @@ class coms(object):
             ***Potentally will be depricated***
              Transmit all values and the current command
         """
-        print("Transmited!")
+        print("[*] Transmitting values...")
+        print("[!] Transmited!")
+        test = serial.serial()
+        test.get_radios()
 
     # collect incoming messages and set values
     def collect(self):
-        print("Transmitting values...")
         """
             ***Potentally will be depricated***
              Collect all that are in queue and update current model
         """
-        print("Collecting values...")
-        print("Collected!")
+        print("[*] Collecting values...")
+        print("[!] Collected!")
+        print("[*] Updating values...")
+        print("[!] Updated!")
 
     # transmit an abort message
     def abort(self):
@@ -152,3 +198,27 @@ class coms(object):
         """
         self.set_command("CUT")
         self.transmit()
+# ------------------------------------------------------------------------------
+# Debug Functions
+#-------------------------------------------------------------------------------
+
+    # this function will pretend that an abort message was recived and will call on itself
+    def force_abort(self):
+        """
+             For debuging an abort call to this system
+        """
+        self.on_abort()
+
+    # this function will pretend that an abort message was recived and will call on itself
+    def force_cut(self):
+        """
+             For debuging a cut call to this system
+        """
+        self.on_cut()
+
+    # this function will pretend that an abort message was recived and will call on itself
+    def force_launch(self):
+        """
+             For debuging a launch call to this system
+        """
+        self.on_launch()

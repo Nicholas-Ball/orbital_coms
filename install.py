@@ -1,7 +1,7 @@
 # this file will install the necessary components for orbital_coms to work
 
 # os version check
-from sys import *
+from sys import exit,platform
 import os
 
 # for running commands on the os because i'm lazy
@@ -23,6 +23,9 @@ if platform == "linux" or platform == "linux2": # linux
 
     # install cmake cross platform
     run("sudo apt install cmake g++ make libpcre3 libpcre3-dev python3-dbg -y || sudo dnf install cmake gcc-c++ python3-dbg make libpcre3 libpcre3-dev swig -y || pacman -Syu cmake g++ make python3-dbg libpcre3 libpcre3-dev swig")
+
+    # pip installs
+    run("pip install numpy")
 
     # download swig from source
     run("git clone https://github.com/swig/swig.git")

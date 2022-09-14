@@ -5,12 +5,12 @@
 
 import serial
 
-class coms(object):
+class gs(object):
     """coms class file for communicate to and from the launch station"""
 
     # constructor for orbital communications
     def __init__(self,DEBUG = False):
-        super(coms, self).__init__()
+        super(gs, self).__init__()
 
         # set defualt gps location (Purdue Bell Tower)
         self.Location = "40.4273N, 86.9141W"
@@ -77,80 +77,6 @@ class coms(object):
         """
         return self.Command
 
-# ------------------------------------------------------------------------------
-# Setters
-# ------------------------------------------------------------------------------
-
-    # sets location as a String
-    def set_location(self,inp:str):
-        """
-             Sets a location value
-
-             Parameters:
-                inp (String): New Location Value
-        """
-        self.Location = inp
-
-    # sets pressure as a String
-    def set_pressure(self,inp:str):
-        """
-             Set the pressure reading
-
-             Parameters:
-                inp (String): New Pressure Value
-        """
-        self.Pressure = inp
-
-    # sets location as a String
-    def set_temperature(self,inp:str):
-        """
-             Set the internal temperature reading
-
-             Parameters:
-                inp (String): New temperature Value
-        """
-        self.Temperature = inp
-
-    # sets current command as a String
-    def set_command(self,inp:str):
-        """
-            ***Intended for use within the class and special cases***
-             Sets a new value of a command being
-
-             Parameters:
-                inp (String): New Command Value
-        """
-        self.Command = inp
-
-    # sets function to call upon reciving an abort command
-    def set_abort(self,inp):
-        """
-             Set a function to be run if the command is "ABORT"
-
-             Parameters:
-                inp (Function): New abort function to set
-        """
-        self.on_abort = inp
-
-    # sets function to call upon reciving a cut command
-    def set_cut(self,inp):
-        """
-             Set a function to be run if the command is "CUT"
-
-             Parameters:
-                inp (Function): New cut function to set
-        """
-        self.on_cut = inp
-
-    # sets function to call upon reciving a launch command
-    def set_launch(self,inp):
-        """
-             Set a function to be run if the command is "LAUNCH"
-
-             Parameters:
-                inp (Function): New launch function to set
-        """
-        self.on_launch = inp
 # ------------------------------------------------------------------------------
 # Special Functions
 #-------------------------------------------------------------------------------

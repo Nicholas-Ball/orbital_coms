@@ -28,27 +28,23 @@
 
 
 # This function is for testing command calls
-def summon():
-    print("I have been summoned!")
 
 
-import ls
+
 import gs
+import threading
 
-g = gs.gs()
-l = ls.ls()
+g = gs.gs(True)
 
-#-------------------------------------------------------------------------------
-# test ls
-#-------------------------------------------------------------------------------
-print("-----------------------------------------------------------------------")
-print("LS Test")
-print("-----------------------------------------------------------------------")
+def abort():
+    print("Uh Oh...")
 
-l.send_temperature(62.0)
-l.send_command("test")
-l.send_location("30.3480N, 95.7827W")
-l.send_pressure(21.0)
+
+def summon():
+    return
+
+def blank():
+    return
 
 #-------------------------------------------------------------------------------
 # test gs
@@ -57,30 +53,46 @@ print("-----------------------------------------------------------------------")
 print("GS Test")
 print("-----------------------------------------------------------------------")
 
-print(g.get_command())
+# get defualt values for testing
 print(g.get_temperature())
 print(g.get_location())
 print(g.get_pressure())
 
-#-------------------------------------------------------------------------------
-# test special functrions
-#-------------------------------------------------------------------------------
-# print("-----------------------------------------------------------------------")
-# print("Special Functions Test")
-# print("-----------------------------------------------------------------------")
-
-# test.abort()
-# print(test.get_command())
-
-
-# test.cut()
-# print(test.get_command())
 
 #-------------------------------------------------------------------------------
-# test on-call functrions
+# test gs in running mode
 #-------------------------------------------------------------------------------
-# print("-----------------------------------------------------------------------")
-# print("On-Call Functions Test")
-# print("-----------------------------------------------------------------------")
 
-# test.force_abort()
+# subscribe events to functions
+g.subscribe(gs.Event.LOCATION,abort)
+
+
+threading.Thread(target=g.start).start()
+
+def menu():
+    print('''
+    1. Send Abort
+    2. Send Launch
+    3. Send Cut
+    4. Print All set Values
+    5+. Exit
+    ''')
+    inp = input("Enter command-> ")
+
+    if inp == "1":
+        g.send_abort()
+    elif inp == "2":
+        g.send_launch()
+    elif inp == "3":
+        g.send_cut()
+    elif inp == "4":
+        print("""
+Location:       {}
+Temperature:    {:.2f}
+Pressure:       {:.2f}
+""".format(g.get_location(),float(g.get_temperature()),float(g.get_pressure())))
+    else:
+        exit()
+
+while True:
+    menu()

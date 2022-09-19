@@ -1,3 +1,4 @@
+
 # Orbital Coms
 ##	Index
 - [Usage](#usage)
@@ -45,12 +46,25 @@ coms.force_abort() #<-- this will print "Something went wrong..."!
 
 ## API Documentation
 
-API Documentation assumes that you already constructed the object using ```orbital_coms.coms()```
+API Documentation assumes that you already constructed the object using ```ls.ls()``` or ```gs.gs()```
 
-### Getters
+### LS & GS
+#### Common Methods
 ```python
-.get_command() # Returns the currently set command as a string
+.subscribe(Flag,Function) # When this program has a instance of the flag being raised, the function set will be run
 ```
+```python
+.start() # This will start the program (Has to be done in order to work)
+```
+#### Common Flags
+```python
+.Event.UPDATE # This flag tells the program to run the function at the end of each cycle (~24 times a second)
+```
+```python
+.Event.FALL # This flag tells the program in the event of no subscribed event is set, run this program instead
+```
+### GS
+#### Getters-GS
 ```python
 .get_temperature() # Returns the currently set temperature as a string
 ```
@@ -60,56 +74,60 @@ API Documentation assumes that you already constructed the object using ```orbit
 ```python
 .get_pressure() # Returns the currently set pressure as a string
 ```
-### Setters
+#### Flags - GS
 ```python
-.set_command(inp) # Set command as a string ***NOT ADVISED! INTENDED FOR SPECIAL CASES***
+.Event.LOCATION # This flag tells the program to run a function when the GS gets a location command (Location will be set automatically)
 ```
 ```python
-.set_temperature(inp) # Set temperature with a string
+.Event.PRESSURE # This flag tells the program to run a function when the GS gets a pressure command (Pressure will be set automatically)
 ```
 ```python
-.set_location(inp) # Set location with a string ({0N,0W} format encouraged)
+.send_temperature(inp) # Sends the temapture to GS
+```
+
+### LS
+#### Senders-LS
+```python
+.send_temperature(inp) # Sends the temapture to GS
 ```
 ```python
-.set_pressure(inp) # Set pressure with a string
+.send_location(inp) # Send Location to GS
+```
+```python
+.send_pressure(inp) # Send pressure to GS
 ```
 ```python
 .set_abort(inp) # Set function to call upon reading an abort command
 ```
-```python
-.set_cut(inp) # Set function to call upon reading a cut command
-```
-```python
-.set_launch(inp) # Set function to call upon reading a launch command
-```
-### Preset Communication
-```python
-.abort() # This will set and transmit an abort message with optimizations*
-```
-```python
-.cut() # This will set and transmit a cut message with optimizations*
-```
-```python
-.launch() # This will set and transmit a launch message with optimizations*
-```
-*optimizations means this command will gain priority and be preformed quicker than if transmitted normally
+#### Flags - LS
 
-### Debug
-```python
-.force_abort() # This will pretend an abort command was given and run the abort code
-```
-```python
-.force_cut() # This will pretend a cut command was given and run the cut functions
-```
-```python
-.force_launch() # This will pretend an abort command was given and run the abort code
-```
 ## Developer Documentation
 This part of the documentation is for all developer working on this library and writing code intended to be used within the API.
 
 ### Serial Class
 This class is used for direct communication to and from the radio with serialized data.
-#### Serial Getters
+
+#### Serial Methods
 ```python
-.get_radios() # This will return all radios connected to this device
+.start() # This will start the serial communication to and from the radio
+```
+```python
+.transmit(data) # This will transmit a given serialized set of data to the radio
+```
+```python
+.collect() # This will collect data that has been recived by the radio and return it
+```
+
+#### Serial Global Vars
+```python
+RX_CHANNEL # This is the channel where the radio will read for incoming transmission
+```
+```python
+RX_FREQENCY # This is the freqency where the radio will read for incoming transmission
+```
+```python
+TX_CHANNEL # This is the channel where the radio will write for outgoing transmissions
+```
+```python
+TX_FREQENCY # This is the freqency where the radio will write for outgoing transmission
 ```

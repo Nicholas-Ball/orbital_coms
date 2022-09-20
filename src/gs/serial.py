@@ -8,7 +8,7 @@ from SoapySDR import *
 from heap import *
 
 # import message class
-from message import *
+from common.message import *
 
 # import time for sleep
 from time import sleep
@@ -63,7 +63,7 @@ class serial(object):
 
             if inp != "" and inp != None:
                 # read message and put in priority
-                tem = message()
+                tem = Message()
                 tem.deserialize(inp)
 
                 # put message into queue

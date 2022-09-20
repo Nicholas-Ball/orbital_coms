@@ -6,7 +6,7 @@
 from heap import *
 
 # import messages
-from message import *
+from common.message import *
 
 # import seral manager
 import serial
@@ -48,6 +48,6 @@ class mp(object):
         data = data.value
 
         # set and return a new message object
-        m = message()
+        m = Message()
         m.deserialize(data)
         return data

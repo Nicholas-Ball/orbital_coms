@@ -8,7 +8,7 @@ import mp
 from enum import Enum
 import time
 import threading
-import message
+import common.message as message
 from logging import Log
 
 class Event(Enum):
@@ -95,7 +95,7 @@ class gs(object):
         Log("[*] Sending abort...")
 
         # build message
-        mes = mp.message("ABORT")
+        mes = mp.Message("ABORT")
 
         # send message
         self.Proccesor.transmit(mes)
@@ -113,7 +113,7 @@ class gs(object):
         Log("[*] Sending pressure...")
 
         # build message
-        mes = mp.message("PRESSURE")
+        mes = mp.Message("PRESSURE")
 
         # send message
         self.Proccesor.transmit(mes)
@@ -131,7 +131,7 @@ class gs(object):
         Log("[*] Sending temperature...")
 
         # build message
-        mes = mp.message("LAUNCH")
+        mes = mp.Message("LAUNCH")
 
         # send message
         self.Proccesor.transmit(mes)
@@ -150,7 +150,7 @@ class gs(object):
         Log("[*] Sending command...")
 
         # build message
-        mes = mp.message("OTHER",data)
+        mes = mp.Message("OTHER",data)
 
         # send message
         self.Proccesor.transmit(mes)
@@ -181,7 +181,7 @@ class gs(object):
             if out != None:
 
                 # make serialized data into a message object
-                mes = message.message()
+                mes = message.Message()
                 mes.deserialize(out)
 
                 # handle message if it is setting values
